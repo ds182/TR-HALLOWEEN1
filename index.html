@@ -1,0 +1,279 @@
+<!DOCTYPE html>
+<html lang="en" translate="no">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Favorite Animal</title>
+    <link rel="stylesheet" href="styles.css">
+    <style>
+        /* CSS para evitar selección de texto */
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #070000;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            color: #e304f7ee;
+            -webkit-user-select: none; /* Disable text selection on Chrome/Safari */
+            -moz-user-select: none; /* Disable text selection on Firefox */
+            -ms-user-select: none; /* Disable text selection on Internet Explorer/Edge */
+            user-select: none; /* Disable text selection on modern browsers */
+        }
+        header {
+            background-color: #003366;
+            color: white;
+            padding: 1em 0;
+            text-align: center;
+            width: 100%;
+        }
+        main {
+            padding: 2em;
+            width: 100%;
+            max-width: 800px;
+            box-sizing: border-box;
+            margin: 0 auto;
+            background: white;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+        section {
+            margin-bottom: 2em;
+        }
+        textarea {
+            width: 100%;
+            padding: 1em;
+            box-sizing: border-box;
+        }
+        button {
+            background-color: #003366;
+            color: white;
+            border: none;
+            padding: 1em 2em;
+            cursor: pointer;
+            width: 100%;
+            max-width: 300px;
+            margin: 1em 0;
+            transition: background-color 0.3s;
+        }
+        button:hover {
+            background-color: #002244;
+        }
+        button.disabled {
+            background-color: red;
+            cursor: not-allowed;
+        }
+        button.enabled {
+            background-color: green;
+        }
+        #results-section {
+            display: none;
+        }
+        .hidden-text {
+            display: none;
+            visibility: hidden;
+        }
+        .warning {
+            color: red;
+            font-weight: bold;
+            display: none;
+        }
+        @media (max-width: 600px) {
+            main {
+                padding: 1em;
+            }
+            button {
+                width: 100%;
+                padding: 1em;
+            }
+        }
+        #score {
+            color: #003366;
+            font-weight: bold;
+            text-decoration: underline;
+            font-size: 24px;
+        }
+
+        #student-name-result {
+            color: #003366;
+            font-weight: bold;
+            font-size: 20px;
+        }
+    </style>
+    <meta name="google" content="notranslate">
+    <meta name="robots" content="noindex, nofollow">
+</head>
+<body>
+    <header>
+        <h1>Las Lágrimas del Perro Negro-The Tears of the Black Dog</h1>
+    </header>
+    <main>
+        <section id="text-section">
+            <h2>LEYENDA</h2>
+            <p id="text-to-translate" class="hidden-text">
+                In a village steeped in superstition, there was a chilling story about a black dog that cried at night, from October 31st to November 2nd. People said its tears were unique, a gateway between the living and the dead. No one knew why the dog wept or where it came from, but it always appeared under the moon, near the cemetery.
+
+                    One Halloween night, Manuel decided to test the legend. Following the dog's cries, he found it beside a grave. The animal looked at him with sad eyes, and there on the ground, he saw tiny wet spots: the dog's tears.
+
+                    Remembering the stories told by the village elders, Manuel gathered the drops. With trembling hands, he put them on his eyes at midnight. At first, nothing happened. But then, a gust of cold wind surrounded him, and the shadows around him began to shift.
+
+                    Before him, blurry figures started to take shape. Spirits of the dead, wandering between the world of the living, glided through the cemetery, unaware of his presence. Some were former villagers, others, strangers from long-forgotten times.
+
+                    Frozen in place, Manuel realized the legend was true. If someone dared to put the tears of a black dog on their eyes during those nights, they could see the realm of the dead... but not everyone returned from it.
+                                </p>
+        </section>
+    </main>
+    
+            
+            <button id="reveal-text-btn">Da clic aquí</button>
+        </section>
+        <section id="translation-section">
+            <h2>Escribe tu traducción:</h2>
+            <textarea id="translation" rows="10" cols="50"></textarea>
+        </section>
+        <section id="questions-section">
+            <h2>Quiz</h2>
+            <form id="quiz-form">
+                <!-- Questions will be inserted here -->
+            </form>
+        </section>
+        <section id="name-section">
+            <h2>Escribe tu nombre</h2>
+            <input type="text" id="student-name" placeholder="Your Name">
+        </section>
+        <button id="submit-btn" class="disabled" disabled>Saber resultados</button>
+        <section id="results-section">
+            <h2>Resultados</h2>
+            <p id="page-title-result"></p>
+            <p id="student-name-result"></p>
+            <p id="text-name-result"></p>
+            <p id="score"></p>
+            <p id="date-time"></p>
+        </section>
+        <p id="warning" class="warning">Prohibido traducir esta página al español.</p>
+    </main>
+    <script>
+        const revealTextBtn = document.getElementById('reveal-text-btn');
+        const textToTranslate = document.getElementById('text-to-translate');
+        
+        revealTextBtn.addEventListener('click', () => {
+            textToTranslate.classList.remove('hidden-text');
+            revealTextBtn.style.display = 'none';
+        });
+
+            const quizData = {
+                    "questions": [
+                        {
+                            "question": "¿En qué fechas aparece el perro negro según la leyenda?",
+                            "options": ["Del 31 de octubre al 2 de noviembre", "Del 24 de diciembre al 1 de enero", "Del 1 al 3 de noviembre"],
+                            "correct": "Del 31 de octubre al 2 de noviembre"
+                        },
+                        {
+                            "question": "¿Dónde llora el perro negro en el pueblo?",
+                            "options": ["En el bosque", "Junto a un roble en el cementerio", "En la plaza del pueblo"],
+                            "correct": "Junto a un roble en el cementerio"
+                        },
+                        {
+                            "question": "¿Qué sucede si te pones las lágrimas del perro negro?",
+                            "options": ["Puedes hablar con animales", "Puedes ver espíritus de muertos", "Puedes viajar en el tiempo"],
+                            "correct": "Puedes ver espíritus de muertos"
+                        },
+                        {
+                            "question": "¿A qué hora debes ponerte las lágrimas del perro negro para ver los espíritus?",
+                            "options": ["A las 3 de la mañana", "A las 12 de la noche", "A las 6 de la tarde"],
+                            "correct": "A las 12 de la noche"
+                        },
+                        {
+                            "question": "¿Qué pasa al final de la historia con Manuel?",
+                            "options": ["Es atrapado por los espíritus", "Desaparece para siempre", "Ve a los espíritus en el cementerio"],
+                            "correct": "Ve a los espíritus en el cementerio"
+                        }
+                    ]
+                };
+
+        const quizForm = document.getElementById('quiz-form');
+        quizData.questions.forEach((q, index) => {
+            const questionElement = document.createElement('div');
+            questionElement.innerHTML = `
+                <p>${q.question}</p>
+                ${q.options.map((option, i) => `<label><input type="radio" name="q${index}" value="${option}"> ${option}</label><br>`).join('')}
+            `;
+            quizForm.appendChild(questionElement);
+        });
+
+        const submitBtn = document.getElementById('submit-btn');
+        const translationTextarea = document.getElementById('translation');
+
+        function countWords(text) {
+            return text.split(/\s+/).filter(Boolean).length;
+        }
+
+        function checkForSpanishWords() {
+            const translationText = translationTextarea.value;
+            const spanishWords = translationText.match(/\b\w+\b/g) || [];
+            const spanishWordCount = spanishWords.length;
+
+            if (spanishWordCount >= 15) {
+                submitBtn.classList.remove('disabled');
+                submitBtn.classList.add('enabled');
+                submitBtn.disabled = false;
+                return true;
+            } else {
+                submitBtn.classList.add('disabled');
+                submitBtn.classList.remove('enabled');
+                submitBtn.disabled = true;
+                return false;
+            }
+        }
+
+        translationTextarea.addEventListener('input', checkForSpanishWords);
+
+        submitBtn.addEventListener('click', () => {
+            const studentName = document.getElementById('student-name').value;
+            if (!studentName) {
+                alert('Por favor, escribe tu nombre.');
+                return;
+            }
+
+            const resultsSection = document.getElementById('results-section');
+            const studentNameResult = document.getElementById('student-name-result');
+            const pageTitleResult = document.getElementById('page-title-result');
+            const textNameResult = document.getElementById('text-name-result');
+            const scoreElement = document.getElementById('score');
+            const dateTimeElement = document.getElementById('date-time');
+
+            const currentDate = new Date();
+            const formattedDate = currentDate.toLocaleDateString();
+            const formattedTime = currentDate.toLocaleTimeString();
+            const formattedDateTime = `${formattedDate} ${formattedTime}`;
+
+            const pageTitle = document.title;
+
+            // Verificar respuestas correctas
+            let correctAnswersCount = 0;
+            quizData.questions.forEach((q, index) => {
+                const selectedAnswer = document.querySelector(`input[name="q${index}"]:checked`);
+                if (selectedAnswer && selectedAnswer.value === q.correct) {
+                    correctAnswersCount++;
+                }
+            });
+
+            // Calcular el puntaje basado en respuestas correctas
+            const score = (correctAnswersCount / quizData.questions.length) * 10;
+
+            studentNameResult.textContent = "Nombre del Estudiante: " + studentName;
+            textNameResult.textContent = "Nombre del Texto: " + pageTitle; // Cambiado para mostrar el título de la página
+            scoreElement.textContent = "Calificación: " + score.toFixed(1);
+            dateTimeElement.textContent = "Fecha y Hora: " + formattedDateTime;
+
+            resultsSection.style.display = 'block';
+        });
+
+        document.getElementById('text-to-translate').addEventListener('copy', (e) => {
+            e.preventDefault();
+            document.getElementById('warning').style.display = 'block';
+        });
+    </script>
+</body>
+</html>
